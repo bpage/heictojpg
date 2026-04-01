@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About | heictojpg</title>
+  <meta name="description" content="About heictojpg — a free, private HEIC to JPG converter that runs entirely in your browser. No upload, no account, no limits.">
+  <link rel="canonical" href="https://heictojpg.pics/about">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0a; --bg-card: #111; --border: #1e1e1e;
+      --text: #e8e8e8; --text-muted: #888; --text-dim: #555;
+      --accent: #3b9eff;
+      --font-logo: 'Barlow Condensed', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 15px; line-height: 1.7; min-height: 100vh; }
+    .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+    header { padding: 40px 20px 20px; text-align: center; border-bottom: 1px solid var(--border); }
+    .logo { font-family: var(--font-logo); font-weight: 800; font-size: clamp(1.8rem, 5vw, 2.6rem); color: #fff; text-decoration: none; display: inline-block; }
+    .tagline { margin-top: 6px; font-size: 0.78rem; letter-spacing: 0.22em; color: var(--text-dim); }
+    main { padding: 56px 20px 80px; }
+    h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 24px; }
+    h2 { font-size: 1.1rem; font-weight: 600; margin: 36px 0 10px; color: var(--text); }
+    p { color: var(--text-muted); margin-bottom: 16px; }
+    .principles { display: grid; gap: 14px; margin: 28px 0; }
+    .principle { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+    .principle strong { display: block; color: var(--text); margin-bottom: 4px; font-size: 0.9rem; }
+    .principle span { font-size: 0.85rem; color: var(--text-muted); }
+    footer { border-top: 1px solid var(--border); padding: 28px 20px 40px; text-align: center; }
+    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 20px; margin-bottom: 14px; }
+    .footer-links a { color: var(--text-dim); text-decoration: none; font-size: 0.8rem; }
+    .footer-links a:hover { color: var(--text-muted); }
+    .footer-note { font-size: 0.72rem; color: #333; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="logo">heictojpg</a>
+    <div class="tagline">instant · private · free</div>
+  </header>
+
+  <main>
+    <div class="container">
+      <h1>About heictojpg</h1>
+
+      <p>heictojpg is a free browser-based converter that turns iPhone HEIC photos into universally compatible JPG, PNG, or WebP files. It was built around a single idea: conversion should be instant, private, and require nothing from you.</p>
+
+      <p>No account. No upload. No file size cap. No conversion limit. No watermarks. Just drop your files, click convert, and download.</p>
+
+      <h2>How it works</h2>
+      <p>The converter uses <strong>libheif</strong>, a mature open-source HEIC decoder compiled to WebAssembly. Your browser downloads the decoder once and runs it locally. When you add a HEIC file, it never leaves your device — it's decoded in memory, drawn to an off-screen canvas, and exported in your chosen format. The whole process happens on your CPU, not ours.</p>
+
+      <h2>Design principles</h2>
+      <div class="principles">
+        <div class="principle">
+          <strong>Privacy by default</strong>
+          <span>No image ever touches a server. We couldn't see your photos even if we wanted to.</span>
+        </div>
+        <div class="principle">
+          <strong>No dark patterns</strong>
+          <span>No fake download buttons. No upsells. No countdown timers. No forced account creation.</span>
+        </div>
+        <div class="principle">
+          <strong>Works offline</strong>
+          <span>Once the page loads, conversion works without an internet connection.</span>
+        </div>
+        <div class="principle">
+          <strong>Batch ready</strong>
+          <span>Convert up to 200 files in one session. Download them all as a ZIP.</span>
+        </div>
+      </div>
+
+      <h2>Contact</h2>
+      <p>Questions or feedback: <!-- ADD CONTACT EMAIL HERE --></p>
+      <p>Domain: [HEICTOJPG.PICS]</p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/about">About</a>
+      <a href="/dmca">DMCA</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-note">for personal use only &nbsp;·&nbsp; respects original content creators</div>
+  </footer>
+</body>
+</html>

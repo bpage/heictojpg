@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEIC to JPG Converter — Free, Instant &amp; Private | heictojpg</title>
+  <meta name="description" content="Convert iPhone HEIC photos to JPG, PNG or WebP instantly in your browser. Photos never leave your device. Free, no account, batch convert up to 200 files.">
+  <link rel="canonical" href="https://heictojpg.pics">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="HEIC to JPG Converter — Free, Instant &amp; Private | heictojpg">
+  <meta property="og:description" content="Convert iPhone HEIC photos to JPG, PNG or WebP instantly in your browser. Photos never leave your device. Free, no account, batch convert up to 200 files.">
+  <meta property="og:url" content="https://heictojpg.pics">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="heictojpg">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="HEIC to JPG Converter — Free, Instant &amp; Private">
+  <meta name="twitter:description" content="Convert iPhone HEIC photos to JPG, PNG or WebP instantly in your browser. No upload. Completely private.">
+
+  <!-- ADD SEARCH CONSOLE VERIFICATION TAG HERE -->
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD FAQ Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I convert HEIC to JPG on Windows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Simply visit heictojpg and drop your HEIC files into the converter. It works entirely in your browser — no software to install on Windows. Just drop your files, click Convert All, and download your JPGs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can't Windows open my iPhone photos?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "iPhones save photos in HEIC format by default, which Windows doesn't natively support without a codec pack. Converting them to JPG makes them universally compatible with Windows, Chrome, and any app or website."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it safe to convert HEIC files online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — on heictojpg, your photos never leave your device. All conversion happens entirely in your browser using WebAssembly. No server ever sees your files, making it completely private."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert multiple HEIC files at once?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Drop up to 200 HEIC files at once into the drop zone, then click Convert All. When all files are done, use the Download All ZIP button to get every converted file packaged in one archive."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is a HEIC file?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "HEIC (High Efficiency Image Container) is Apple's modern image format introduced with iOS 11. It uses the HEVC codec to deliver better quality at roughly half the file size of a standard JPG. Most non-Apple software doesn't support it natively."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I turn off HEIC on my iPhone?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Go to Settings → Camera → Formats and select \"Most Compatible.\" Your iPhone will then save photos as standard JPG files. This uses more storage but ensures photos open on any device without conversion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I convert HEIC to JPG without internet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes — once the heictojpg page has fully loaded, it works completely offline. The WebAssembly converter runs locally in your browser with no server connection required for conversion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this work on Mac?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, heictojpg works on Mac in Chrome, Safari, Firefox, and Edge. Drag and drop your HEIC files directly into the browser window, choose your output format, and download the converted images — no software installation needed."
+        }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --bg-card: #111111;
+      --bg-input: #0d0d0d;
+      --border: #1e1e1e;
+      --border-hover: #333333;
+      --border-accent: #444444;
+      --text: #e8e8e8;
+      --text-muted: #888888;
+      --text-dim: #555555;
+      --accent: #1d9bf0;
+      --accent-hover: #3aabf3;
+      --success: #22c55e;
+      --error: #ef4444;
+      --font-logo: 'Barlow Condensed', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .hidden { display: none !important; }
+
+    /* ── WASM Banner ── */
+    .wasm-banner {
+      background: #1a1200;
+      border-bottom: 1px solid #3a2800;
+      color: #f0b429;
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 0.875rem;
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 48px 20px 16px;
+      text-align: center;
+    }
+
+    .logo {
+      font-family: var(--font-logo);
+      font-weight: 800;
+      font-size: clamp(2.6rem, 8vw, 4rem);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+
+    .logo-white { color: #ffffff; }
+    .logo-blue  { color: var(--accent); }
+
+    .tagline {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    /* ── Trust Badges ── */
+    .badges-section {
+      padding: 20px 20px 0;
+      text-align: center;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 14px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .badge svg { flex-shrink: 0; opacity: 0.7; }
+
+    /* ── Ad Slots ── */
+    .ad-leaderboard {
+      margin: 28px auto 0;
+      text-align: center;
+      max-width: 728px;
+      padding: 0 20px;
+    }
+
+    .ad-rectangle-wrap {
+      margin: 40px auto 0;
+      text-align: center;
+      max-width: 336px;
+    }
+
+    .ad-label {
+      font-size: 0.65rem;
+      color: #333;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .ad-placeholder {
+      background: #111;
+      border: 1px solid #1e1e1e;
+      border-radius: 4px;
+      color: #333;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ad-leaderboard .ad-placeholder { height: 90px; width: 100%; max-width: 728px; }
+    .ad-rectangle-wrap .ad-placeholder { height: 280px; width: 336px; margin: 0 auto; }
+
+    @media (max-width: 768px) {
+      .ad-leaderboard { display: none; }
+    }
+
+    /* ── Main ── */
+    main { padding: 32px 0 0; }
+
+    main h1 {
+      text-align: center;
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 28px;
+      padding: 0 20px;
+    }
+
+    /* ── Drop Zone ── */
+    .dropzone {
+      max-width: 620px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      border-radius: 18px;
+      padding: 48px 36px 44px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease;
+      position: relative;
+    }
+
+    .dropzone:hover, .dropzone.drag-over {
+      border-color: #333;
+      background: #141414;
+    }
+
+    .dropzone.error-flash {
+      border-color: var(--error);
+      animation: flashBorder 0.6s ease;
+    }
+
+    @keyframes flashBorder {
+      0%, 100% { border-color: var(--error); }
+      50% { border-color: #ff6b6b; }
+    }
+
+    .drop-icon { margin-bottom: 16px; opacity: 0.35; }
+
+    .drop-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .drop-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .drop-hint {
+      font-size: 0.73rem;
+      color: var(--text-dim);
+      margin-top: 14px;
+    }
+
+    .btn-browse {
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 11px 32px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      letter-spacing: 0.01em;
+      transition: background 0.15s, transform 0.1s;
+      pointer-events: none; /* dropzone click handles it */
+    }
+
+    .dropzone:hover .btn-browse { background: var(--accent-hover); }
+    .dropzone.drag-over .btn-browse { transform: scale(0.97); }
+
+    .drop-error-msg {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.75rem;
+      color: var(--error);
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .drop-error-msg.visible { opacity: 1; }
+
+    /* ── Options Bar ── */
+    .options-bar {
+      max-width: 620px;
+      margin: 12px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+
+    .options-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .format-toggle {
+      display: flex;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .fmt-btn {
+      background: none;
+      border: none;
+      padding: 6px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: var(--font-body);
+      letter-spacing: 0.04em;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .fmt-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .fmt-btn:not(.active):hover { background: #1a1a1a; color: var(--text); }
+
+    .quality-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .quality-group label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .quality-group input[type=range] {
+      -webkit-appearance: none;
+      width: 100px;
+      height: 4px;
+      background: var(--border-hover);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .quality-group input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    .quality-group input[type=range]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+    }
+
+    #qualityVal {
+      font-size: 0.78rem;
+      color: var(--text);
+      min-width: 32px;
+    }
+
+    .action-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 13px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font-body);
+      width: 100%;
+      letter-spacing: 0.01em;
+      transition: background 0.15s, opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border-hover);
+      border-radius: 9999px;
+      padding: 11px 24px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: var(--font-body);
+      width: 100%;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .btn-secondary:hover { border-color: var(--border-accent); color: #fff; }
+
+    /* ── Stats Bar ── */
+    .stats-bar {
+      max-width: 620px;
+      margin: 10px auto 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: right;
+      padding: 0 4px;
+    }
+
+    .stats-bar span { color: var(--success); font-weight: 600; }
+
+    /* ── Results Grid ── */
+    .results-grid {
+      margin: 28px auto 0;
+      max-width: 960px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      padding: 0 20px;
+    }
+
+    @media (max-width: 860px) {
+      .results-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .results-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: cardIn 0.28s ease forwards;
+    }
+
+    @keyframes cardIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: #0d0d0d;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-thumb .thumb-placeholder {
+      opacity: 0.15;
+    }
+
+    .card-check {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--success);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .card-check.visible { opacity: 1; transform: scale(1); }
+
+    .card-error-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--error);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .card-body { padding: 12px; }
+
+    .card-name {
+      font-size: 0.78rem;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .card-sizes {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .card-sizes .arrow { color: #333; margin: 0 4px; }
+    .card-sizes .after { color: var(--success); }
+
+    .card-progress {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .card-progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .card-progress.done .card-progress-bar { background: var(--success); }
+    .card-progress.error .card-progress-bar { background: var(--error); }
+
+    .card-actions { display: flex; gap: 6px; }
+
+    .btn-download {
+      flex: 1;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 9999px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-download:hover { background: var(--accent-hover); }
+    .btn-download:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-retry {
+      background: transparent;
+      color: var(--error);
+      border: 1px solid var(--error);
+      border-radius: 9999px;
+      padding: 8px 10px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.15s;
+    }
+
+    .btn-retry:hover { background: rgba(239,68,68,0.1); }
+
+    .card-error-msg {
+      font-size: 0.72rem;
+      color: var(--error);
+      margin-bottom: 8px;
+    }
+
+    /* ── Privacy Section ── */
+    .privacy-section {
+      margin-top: 72px;
+      padding: 56px 20px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .privacy-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      .privacy-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    .privacy-section h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .privacy-section p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 28px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .flow-step {
+      text-align: center;
+      flex: 1;
+    }
+
+    .flow-icon {
+      width: 44px;
+      height: 44px;
+      background: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px;
+    }
+
+    .flow-label {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .flow-sub {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .flow-arrow {
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      padding: 0 4px;
+      flex-shrink: 0;
+      padding-bottom: 20px;
+    }
+
+    .flow-no-server {
+      text-align: center;
+      font-size: 0.68rem;
+      color: var(--error);
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 56px 20px;
+    }
+
+    .faq-section h2 {
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 36px;
+    }
+
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+      gap: 12px;
+      user-select: none;
+    }
+
+    .faq-question:hover { color: #fff; }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+      color: var(--text-dim);
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-answer-inner {
+      padding-bottom: 18px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .faq-item.open .faq-answer { max-height: 200px; }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px 40px;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 6px 20px;
+      margin-bottom: 14px;
+    }
+
+    .footer-links a {
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: color 0.15s;
+    }
+
+    .footer-links a:hover { color: var(--text-muted); }
+
+    .footer-note {
+      font-size: 0.72rem;
+      color: #333;
+    }
+
+    /* ── Mobile Sticky Ad ── */
+    .mobile-sticky-ad {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #0f0f0f;
+      border-top: 1px solid var(--border);
+      padding: 8px;
+      text-align: center;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .mobile-sticky-ad .ad-placeholder {
+      height: 50px;
+      width: 320px;
+    }
+
+    .dismiss-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #1e1e1e;
+      border: none;
+      color: var(--text-muted);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background 0.15s;
+    }
+
+    .dismiss-btn:hover { background: #2a2a2a; }
+
+    @media (min-width: 769px) {
+      .mobile-sticky-ad { display: none !important; }
+    }
+
+    /* ── Responsive tweaks ── */
+    @media (max-width: 480px) {
+      .dropzone { padding: 36px 20px 32px; border-radius: 14px; }
+      .options-bar { border-radius: 14px; }
+      .quality-group input[type=range] { width: 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- No WebAssembly warning -->
+  <div id="noWasmBanner" class="wasm-banner hidden">
+    Try Chrome or Safari for best results — your browser may not support WebAssembly conversion.
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo"><span class="logo-white">HEIC</span><span class="logo-blue">TOJPG</span></div>
+    <div class="tagline">Free HEIC to JPG Converter — drop files, get JPGs.</div>
+  </header>
+
+  <!-- Trust Badges -->
+  <section class="badges-section">
+    <div class="badges">
+      <div class="badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+        photos stay on your device
+      </div>
+      <div class="badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+        </svg>
+        no account required
+      </div>
+      <div class="badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4"/>
+          <path d="M3 3l18 18"/>
+        </svg>
+        no file limit
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad Slot 1: Leaderboard (desktop only) -->
+  <div class="ad-leaderboard">
+    <div class="ad-label">Advertisement</div>
+    <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: leaderboard-top --></div>
+  </div>
+
+  <!-- Main Converter -->
+  <main>
+    <div class="container">
+      <h1>Free HEIC to JPG Converter — No Upload Required</h1>
+
+      <!-- Drop Zone -->
+      <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Drop HEIC files here or click to browse">
+        <div class="drop-icon">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/>
+            <path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/>
+          </svg>
+        </div>
+        <p class="drop-text">Drop HEIC files here</p>
+        <p class="drop-sub">or select files from your device</p>
+        <button class="btn-browse" tabindex="-1" aria-hidden="true">Browse Files</button>
+        <p class="drop-hint">Supports .heic and .heif &nbsp;·&nbsp; up to 200 files</p>
+        <div id="dropErrorMsg" class="drop-error-msg">HEIC and HEIF files only</div>
+        <input type="file" id="fileInput" accept=".heic,.heif,image/heic,image/heif" multiple style="display:none">
+      </div>
+
+      <!-- Options Bar -->
+      <div id="optionsBar" class="options-bar hidden">
+        <div class="options-row">
+          <div class="format-toggle">
+            <button class="fmt-btn active" data-fmt="jpeg">JPG</button>
+            <button class="fmt-btn" data-fmt="png">PNG</button>
+            <button class="fmt-btn" data-fmt="webp">WEBP</button>
+          </div>
+          <div class="quality-group">
+            <label for="qualitySlider">Quality</label>
+            <input type="range" id="qualitySlider" min="60" max="100" value="85">
+            <span id="qualityVal">85%</span>
+          </div>
+        </div>
+        <div class="action-btns">
+          <button id="convertAllBtn" class="btn-primary">Convert All</button>
+          <button id="downloadZipBtn" class="btn-secondary hidden">Download All ZIP</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div id="statsBar" class="stats-bar hidden"></div>
+
+      <!-- Results Grid -->
+      <div id="resultsGrid" class="results-grid"></div>
+
+      <!-- Ad Slot 2: Rectangle (shown after first conversion) -->
+      <div id="adRect" class="ad-rectangle-wrap hidden">
+        <div class="ad-label">Advertisement</div>
+        <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: rectangle-post-convert --></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Privacy Section -->
+  <section class="privacy-section">
+    <div class="privacy-inner">
+      <div>
+        <h2>Your photos never leave your device</h2>
+        <p>
+          heictojpg converts your files entirely inside your browser using WebAssembly —
+          the same technology that powers desktop-class software on the web. No file is
+          ever uploaded to a server. No network request is made during conversion.
+          Your photos stay completely private, exactly where you put them.
+        </p>
+      </div>
+      <div>
+        <div class="flow-diagram">
+          <div class="flow-step">
+            <div class="flow-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <div class="flow-label">HEIC file</div>
+            <div class="flow-sub">your device</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d9bf0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/>
+              </svg>
+            </div>
+            <div class="flow-label">Browser</div>
+            <div class="flow-sub">WebAssembly</div>
+          </div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step">
+            <div class="flow-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+                <polyline points="21 15 16 10 5 21"/>
+              </svg>
+            </div>
+            <div class="flow-label">JPG / PNG</div>
+            <div class="flow-sub">your device</div>
+          </div>
+        </div>
+        <div class="flow-no-server">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>
+          </svg>
+          no server involved
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="faq-section">
+    <div class="container" style="max-width:760px">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do I convert HEIC to JPG on Windows?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Simply visit heictojpg and drop your HEIC files into the converter. It works entirely in your browser — no software to install on Windows. Just drop your files, click Convert All, and download your JPGs instantly.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Why can't Windows open my iPhone photos?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">iPhones save photos in HEIC format by default, which Windows doesn't natively support without a codec pack. Converting them to JPG makes them universally compatible with Windows, Chrome, and any app or website.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Is it safe to convert HEIC files online?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes — on heictojpg, your photos never leave your device. All conversion happens entirely in your browser using WebAssembly. No server ever sees your files, making it completely private.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do I convert multiple HEIC files at once?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Drop up to 200 HEIC files at once into the drop zone, then click Convert All. When all files are done, use the Download All ZIP button to get every converted file packaged in one archive.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>What is a HEIC file?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">HEIC (High Efficiency Image Container) is Apple's modern image format introduced with iOS 11. It uses the HEVC codec to deliver better quality at roughly half the file size of a standard JPG. Most non-Apple software doesn't support it natively.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>How do I turn off HEIC on my iPhone?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Go to Settings → Camera → Formats and select "Most Compatible." Your iPhone will then save photos as standard JPG files. This uses more storage but ensures photos open on any device without conversion.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Can I convert HEIC to JPG without internet?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes — once the heictojpg page has fully loaded, it works completely offline. The WebAssembly converter runs locally in your browser with no server connection required for conversion.</div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <div class="faq-question">
+            <span>Does this work on Mac?</span>
+            <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Yes, heictojpg works on Mac in Chrome, Safari, Firefox, and Edge. Drag and drop your HEIC files directly into the browser window, choose your output format, and download the converted images — no software installation needed.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/about">About</a>
+      <a href="/dmca">DMCA</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="footer-note">for personal use only &nbsp;·&nbsp; respects original content creators</div>
+  </footer>
+
+  <!-- Mobile Sticky Ad -->
+  <div id="mobileStickyAd" class="mobile-sticky-ad hidden">
+    <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: mobile-sticky --></div>
+    <button id="dismissStickyAd" class="dismiss-btn" aria-label="Dismiss">×</button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/libheif-js/libheif-wasm/libheif.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    // ── State ──────────────────────────────────────────────────────────────────
+    let libheifModule = null;
+    let libheifReady = false;
+    let currentFormat = 'jpeg';
+    let currentQuality = 85;
+    let isConverting = false;
+    const fileQueue = []; // { id, file, status, blobUrl, originalSize, convertedSize }
+    let nextId = 0;
+
+    // ── DOM ────────────────────────────────────────────────────────────────────
+    const dropzone       = document.getElementById('dropzone');
+    const fileInput      = document.getElementById('fileInput');
+    const optionsBar     = document.getElementById('optionsBar');
+    const convertAllBtn  = document.getElementById('convertAllBtn');
+    const downloadZipBtn = document.getElementById('downloadZipBtn');
+    const resultsGrid    = document.getElementById('resultsGrid');
+    const statsBar       = document.getElementById('statsBar');
+    const qualitySlider  = document.getElementById('qualitySlider');
+    const qualityVal     = document.getElementById('qualityVal');
+    const adRect         = document.getElementById('adRect');
+    const noWasmBanner   = document.getElementById('noWasmBanner');
+    const dropErrorMsg   = document.getElementById('dropErrorMsg');
+    const mobileStickyAd = document.getElementById('mobileStickyAd');
+    const dismissStickyAd = document.getElementById('dismissStickyAd');
+
+    // ── WebAssembly check ──────────────────────────────────────────────────────
+    if (typeof WebAssembly === 'undefined') {
+      noWasmBanner.classList.remove('hidden');
+    }
+
+    // ── libheif init ───────────────────────────────────────────────────────────
+    async function initLibheif() {
+      if (libheifReady) return true;
+      try {
+        // Wait for the global to be available
+        await new Promise((resolve, reject) => {
+          let attempts = 0;
+          const check = () => {
+            if (typeof window.libheif !== 'undefined') return resolve();
+            if (++attempts > 100) return reject(new Error('libheif load timeout'));
+            setTimeout(check, 100);
+          };
+          check();
+        });
+
+        if (typeof window.libheif === 'function') {
+          libheifModule = await window.libheif();
+        } else if (window.libheif && window.libheif.HeifDecoder) {
+          libheifModule = window.libheif;
+        } else {
+          // Some builds export a default property
+          const mod = window.libheif;
+          if (mod && mod.default) {
+            libheifModule = typeof mod.default === 'function' ? await mod.default() : mod.default;
+          } else {
+            throw new Error('Unrecognized libheif export format');
+          }
+        }
+
+        libheifReady = true;
+        return true;
+      } catch (e) {
+        console.error('libheif init failed:', e);
+        return false;
+      }
+    }
+
+    // Start loading immediately
+    initLibheif();
+
+    // ── Utilities ──────────────────────────────────────────────────────────────
+    function formatBytes(bytes) {
+      if (bytes === null || bytes === undefined) return '—';
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function getMimeType(fmt) {
+      if (fmt === 'png') return 'image/png';
+      if (fmt === 'webp') return 'image/webp';
+      return 'image/jpeg';
+    }
+
+    function getExtension(fmt) {
+      if (fmt === 'png') return 'png';
+      if (fmt === 'webp') return 'webp';
+      return 'jpg';
+    }
+
+    function replaceExtension(filename, ext) {
+      return filename.replace(/\.(heic|heif)$/i, '') + '.' + ext;
+    }
+
+    function yield_() {
+      return new Promise(r => setTimeout(r, 0));
+    }
+
+    // ── Card management ────────────────────────────────────────────────────────
+    function createCard(item) {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = 'card-' + item.id;
+      card.innerHTML = `
+        <div class="card-thumb" id="thumb-${item.id}">
+          <svg class="thumb-placeholder" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <div class="card-check" id="check-${item.id}">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-name" title="${item.file.name}">${item.file.name}</div>
+          <div class="card-sizes" id="sizes-${item.id}">
+            <span class="before">${formatBytes(item.file.size)}</span>
+          </div>
+          <div class="card-progress" id="progress-${item.id}">
+            <div class="card-progress-bar" id="pbar-${item.id}"></div>
+          </div>
+          <div class="card-actions" id="actions-${item.id}">
+            <button class="btn-download" id="dlbtn-${item.id}" disabled>Download</button>
+          </div>
+        </div>
+      `;
+      resultsGrid.appendChild(card);
+    }
+
+    function setProgress(id, pct) {
+      const bar = document.getElementById('pbar-' + id);
+      if (bar) bar.style.width = pct + '%';
+    }
+
+    function setCardDone(item) {
+      const progressEl = document.getElementById('progress-' + item.id);
+      const sizesEl = document.getElementById('sizes-' + item.id);
+      const checkEl = document.getElementById('check-' + item.id);
+      const dlBtn = document.getElementById('dlbtn-' + item.id);
+      const thumbEl = document.getElementById('thumb-' + item.id);
+
+      if (progressEl) {
+        progressEl.classList.add('done');
+        setProgress(item.id, 100);
+      }
+      if (sizesEl) {
+        sizesEl.innerHTML = `
+          <span class="before">${formatBytes(item.originalSize)}</span>
+          <span class="arrow">→</span>
+          <span class="after">${formatBytes(item.convertedSize)}</span>
+        `;
+      }
+      if (checkEl) checkEl.classList.add('visible');
+      if (dlBtn) {
+        dlBtn.disabled = false;
+        dlBtn.onclick = () => downloadFile(item);
+      }
+
+      // Set thumbnail
+      if (item.blobUrl && thumbEl) {
+        const img = document.createElement('img');
+        img.src = item.blobUrl;
+        img.alt = item.file.name;
+        thumbEl.innerHTML = '';
+        thumbEl.appendChild(img);
+        const newCheck = document.createElement('div');
+        newCheck.className = 'card-check visible';
+        newCheck.id = 'check-' + item.id;
+        newCheck.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+        thumbEl.appendChild(newCheck);
+      }
+    }
+
+    function setCardError(item, message) {
+      const progressEl = document.getElementById('progress-' + item.id);
+      const actionsEl = document.getElementById('actions-' + item.id);
+      const thumbEl = document.getElementById('thumb-' + item.id);
+
+      if (progressEl) progressEl.classList.add('error');
+
+      if (actionsEl) {
+        actionsEl.innerHTML = `
+          <div class="card-error-msg">Could not convert this file</div>
+          <button class="btn-retry" onclick="retryFile(${item.id})">Retry</button>
+        `;
+      }
+
+      if (thumbEl) {
+        const badge = document.createElement('div');
+        badge.className = 'card-error-badge';
+        badge.textContent = '!';
+        thumbEl.appendChild(badge);
+      }
+    }
+
+    // ── File ingestion ─────────────────────────────────────────────────────────
+    function isHeicFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      return ext === 'heic' || ext === 'heif' ||
+             file.type === 'image/heic' || file.type === 'image/heif';
+    }
+
+    function flashDropzoneError() {
+      dropzone.classList.add('error-flash');
+      dropErrorMsg.classList.add('visible');
+      setTimeout(() => {
+        dropzone.classList.remove('error-flash');
+        dropErrorMsg.classList.remove('visible');
+      }, 2000);
+    }
+
+    function addFiles(files) {
+      const arr = Array.from(files);
+      if (arr.length === 0) return;
+
+      const invalid = arr.filter(f => !isHeicFile(f));
+      const valid = arr.filter(f => isHeicFile(f));
+
+      if (invalid.length > 0 && valid.length === 0) {
+        flashDropzoneError();
+        return;
+      }
+
+      const toAdd = valid.slice(0, 200 - fileQueue.length);
+      if (toAdd.length === 0) return;
+
+      toAdd.forEach(file => {
+        const item = {
+          id: nextId++,
+          file,
+          status: 'pending',
+          blobUrl: null,
+          originalSize: file.size,
+          convertedSize: null,
+        };
+        fileQueue.push(item);
+        createCard(item);
+      });
+
+      optionsBar.classList.remove('hidden');
+      downloadZipBtn.classList.add('hidden');
+      statsBar.classList.add('hidden');
+    }
+
+    // ── Drop zone events ───────────────────────────────────────────────────────
+    dropzone.addEventListener('click', () => fileInput.click());
+    dropzone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+
+    dropzone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropzone.classList.add('drag-over');
+    });
+
+    dropzone.addEventListener('dragleave', e => {
+      if (!dropzone.contains(e.relatedTarget)) {
+        dropzone.classList.remove('drag-over');
+      }
+    });
+
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('drag-over');
+      addFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => {
+      addFiles(fileInput.files);
+      fileInput.value = '';
+    });
+
+    // ── Format / Quality controls ──────────────────────────────────────────────
+    document.querySelectorAll('.fmt-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.fmt-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFormat = btn.dataset.fmt;
+      });
+    });
+
+    qualitySlider.addEventListener('input', () => {
+      currentQuality = parseInt(qualitySlider.value, 10);
+      qualityVal.textContent = currentQuality + '%';
+    });
+
+    // ── Conversion ─────────────────────────────────────────────────────────────
+    async function convertSingleFile(item) {
+      item.status = 'converting';
+      setProgress(item.id, 10);
+      await yield_();
+
+      try {
+        const ok = await initLibheif();
+        if (!ok) throw new Error('libheif not available');
+
+        setProgress(item.id, 20);
+        await yield_();
+
+        const arrayBuffer = await item.file.arrayBuffer();
+        const uint8Array = new Uint8Array(arrayBuffer);
+
+        setProgress(item.id, 35);
+        await yield_();
+
+        const decoder = new libheifModule.HeifDecoder();
+        const images = decoder.decode(uint8Array);
+
+        if (!images || images.length === 0) throw new Error('No images decoded');
+
+        setProgress(item.id, 50);
+        await yield_();
+
+        const heifImage = images[0];
+        const width = heifImage.get_width();
+        const height = heifImage.get_height();
+
+        const displayData = await new Promise((resolve, reject) => {
+          const data = new Uint8ClampedArray(4 * width * height);
+          heifImage.display({ data, width, height }, result => {
+            if (!result) return reject(new Error('libheif display failed'));
+            resolve(result);
+          });
+        });
+
+        setProgress(item.id, 75);
+        await yield_();
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.putImageData(new ImageData(displayData.data, width, height), 0, 0);
+
+        setProgress(item.id, 88);
+        await yield_();
+
+        const mime = getMimeType(currentFormat);
+        const quality = currentFormat === 'png' ? undefined : currentQuality / 100;
+        const blob = await new Promise((resolve, reject) => {
+          canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), mime, quality);
+        });
+
+        item.blobUrl = URL.createObjectURL(blob);
+        item.convertedSize = blob.size;
+        item.status = 'done';
+        item.format = currentFormat;
+        setCardDone(item);
+
+      } catch (err) {
+        console.error('Conversion error:', err);
+        item.status = 'error';
+        setCardError(item, err.message);
+      }
+    }
+
+    async function convertAll() {
+      if (isConverting) return;
+
+      const pending = fileQueue.filter(f => f.status === 'pending');
+      if (pending.length === 0) return;
+
+      isConverting = true;
+      convertAllBtn.disabled = true;
+      convertAllBtn.textContent = 'Converting…';
+      downloadZipBtn.classList.add('hidden');
+      statsBar.classList.add('hidden');
+
+      for (const item of pending) {
+        await convertSingleFile(item);
+        await yield_();
+      }
+
+      isConverting = false;
+      convertAllBtn.disabled = false;
+      convertAllBtn.textContent = 'Convert All';
+
+      const done = fileQueue.filter(f => f.status === 'done');
+      if (done.length > 0) {
+        downloadZipBtn.classList.remove('hidden');
+        adRect.classList.remove('hidden');
+        updateStats();
+      }
+    }
+
+    convertAllBtn.addEventListener('click', convertAll);
+
+    // ── Retry ──────────────────────────────────────────────────────────────────
+    window.retryFile = async function(id) {
+      const item = fileQueue.find(f => f.id === id);
+      if (!item) return;
+      item.status = 'pending';
+
+      const actionsEl = document.getElementById('actions-' + id);
+      const progressEl = document.getElementById('progress-' + id);
+      if (actionsEl) actionsEl.innerHTML = `<button class="btn-download" id="dlbtn-${id}" disabled>Download</button>`;
+      if (progressEl) {
+        progressEl.classList.remove('error');
+        setProgress(id, 0);
+      }
+
+      await convertSingleFile(item);
+
+      const done = fileQueue.filter(f => f.status === 'done');
+      if (done.length > 0) {
+        downloadZipBtn.classList.remove('hidden');
+        adRect.classList.remove('hidden');
+        updateStats();
+      }
+    };
+
+    // ── Stats ──────────────────────────────────────────────────────────────────
+    function updateStats() {
+      const done = fileQueue.filter(f => f.status === 'done');
+      if (done.length === 0) return;
+
+      const totalOrig = done.reduce((s, f) => s + f.originalSize, 0);
+      const totalConv = done.reduce((s, f) => s + f.convertedSize, 0);
+      const saved = Math.max(0, totalOrig - totalConv);
+
+      statsBar.classList.remove('hidden');
+      statsBar.innerHTML = `<span>${done.length} file${done.length !== 1 ? 's' : ''} converted</span> · saved ${formatBytes(saved)}`;
+    }
+
+    // ── Download ───────────────────────────────────────────────────────────────
+    function downloadFile(item) {
+      if (!item.blobUrl) return;
+      const a = document.createElement('a');
+      a.href = item.blobUrl;
+      a.download = replaceExtension(item.file.name, getExtension(item.format || currentFormat));
+      a.click();
+    }
+
+    downloadZipBtn.addEventListener('click', async () => {
+      const done = fileQueue.filter(f => f.status === 'done' && f.blobUrl);
+      if (done.length === 0) return;
+
+      downloadZipBtn.disabled = true;
+      downloadZipBtn.textContent = 'Zipping…';
+
+      try {
+        const zip = new JSZip();
+        for (const item of done) {
+          const resp = await fetch(item.blobUrl);
+          const blob = await resp.blob();
+          const filename = replaceExtension(item.file.name, getExtension(item.format || currentFormat));
+          zip.file(filename, blob);
+        }
+        const content = await zip.generateAsync({ type: 'blob' });
+        const url = URL.createObjectURL(content);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'heictojpg-converted.zip';
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) {
+        console.error('ZIP error:', e);
+      }
+
+      downloadZipBtn.disabled = false;
+      downloadZipBtn.textContent = 'Download All ZIP';
+    });
+
+    // ── FAQ accordion ──────────────────────────────────────────────────────────
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.closest('.faq-item');
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+      });
+    });
+
+    // ── Mobile sticky ad ───────────────────────────────────────────────────────
+    if (window.innerWidth < 769) {
+      setTimeout(() => {
+        mobileStickyAd.classList.remove('hidden');
+      }, 5000);
+    }
+
+    dismissStickyAd.addEventListener('click', () => {
+      mobileStickyAd.classList.add('hidden');
+    });
+
+  })();
+  </script>
+</body>
+</html>
