@@ -1159,14 +1159,12 @@
 
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/libheif-js/libheif-wasm/libheif.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
   <script>
   (function () {
     'use strict';
 
     // ── State ──────────────────────────────────────────────────────────────────
-    let libheifModule = null;
-    let libheifReady = false;
     let currentFormat = 'jpeg';
     let currentQuality = 85;
     let isConverting = false;
@@ -1193,46 +1191,6 @@
     if (typeof WebAssembly === 'undefined') {
       noWasmBanner.classList.remove('hidden');
     }
-
-    // ── libheif init ───────────────────────────────────────────────────────────
-    async function initLibheif() {
-      if (libheifReady) return true;
-      try {
-        // Wait for the global to be available
-        await new Promise((resolve, reject) => {
-          let attempts = 0;
-          const check = () => {
-            if (typeof window.libheif !== 'undefined') return resolve();
-            if (++attempts > 100) return reject(new Error('libheif load timeout'));
-            setTimeout(check, 100);
-          };
-          check();
-        });
-
-        if (typeof window.libheif === 'function') {
-          libheifModule = await window.libheif();
-        } else if (window.libheif && window.libheif.HeifDecoder) {
-          libheifModule = window.libheif;
-        } else {
-          // Some builds export a default property
-          const mod = window.libheif;
-          if (mod && mod.default) {
-            libheifModule = typeof mod.default === 'function' ? await mod.default() : mod.default;
-          } else {
-            throw new Error('Unrecognized libheif export format');
-          }
-        }
-
-        libheifReady = true;
-        return true;
-      } catch (e) {
-        console.error('libheif init failed:', e);
-        return false;
-      }
-    }
-
-    // Start loading immediately
-    initLibheif();
 
     // ── Utilities ──────────────────────────────────────────────────────────────
     function formatBytes(bytes) {
@@ -1451,59 +1409,24 @@
     // ── Conversion ─────────────────────────────────────────────────────────────
     async function convertSingleFile(item) {
       item.status = 'converting';
-      setProgress(item.id, 10);
+      setProgress(item.id, 15);
       await yield_();
 
       try {
-        const ok = await initLibheif();
-        if (!ok) throw new Error('libheif not available');
-
-        setProgress(item.id, 20);
+        setProgress(item.id, 40);
         await yield_();
 
-        const arrayBuffer = await item.file.arrayBuffer();
-        const uint8Array = new Uint8Array(arrayBuffer);
-
-        setProgress(item.id, 35);
-        await yield_();
-
-        const decoder = new libheifModule.HeifDecoder();
-        const images = decoder.decode(uint8Array);
-
-        if (!images || images.length === 0) throw new Error('No images decoded');
-
-        setProgress(item.id, 50);
-        await yield_();
-
-        const heifImage = images[0];
-        const width = heifImage.get_width();
-        const height = heifImage.get_height();
-
-        const displayData = await new Promise((resolve, reject) => {
-          const data = new Uint8ClampedArray(4 * width * height);
-          heifImage.display({ data, width, height }, result => {
-            if (!result) return reject(new Error('libheif display failed'));
-            resolve(result);
-          });
+        const result = await heic2any({
+          blob: item.file,
+          toType: getMimeType(currentFormat),
+          quality: currentFormat === 'png' ? 1 : currentQuality / 100,
         });
 
-        setProgress(item.id, 75);
+        setProgress(item.id, 85);
         await yield_();
 
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        ctx.putImageData(new ImageData(displayData.data, width, height), 0, 0);
-
-        setProgress(item.id, 88);
-        await yield_();
-
-        const mime = getMimeType(currentFormat);
-        const quality = currentFormat === 'png' ? undefined : currentQuality / 100;
-        const blob = await new Promise((resolve, reject) => {
-          canvas.toBlob(b => b ? resolve(b) : reject(new Error('toBlob failed')), mime, quality);
-        });
+        // heic2any returns a single blob or an array (multi-image HEIC)
+        const blob = Array.isArray(result) ? result[0] : result;
 
         item.blobUrl = URL.createObjectURL(blob);
         item.convertedSize = blob.size;
