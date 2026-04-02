@@ -1187,10 +1187,15 @@
     const mobileStickyAd = document.getElementById('mobileStickyAd');
     const dismissStickyAd = document.getElementById('dismissStickyAd');
 
-    // ── WebAssembly check ──────────────────────────────────────────────────────
-    if (typeof WebAssembly === 'undefined') {
-      noWasmBanner.classList.remove('hidden');
-    }
+    // ── WebAssembly check — only show banner if it actually fails ─────────────
+    (async () => {
+      try {
+        // Minimal valid WASM module (magic bytes + version)
+        await WebAssembly.compile(new Uint8Array([0,97,115,109,1,0,0,0]));
+      } catch {
+        noWasmBanner.classList.remove('hidden');
+      }
+    })();
 
     // ── Utilities ──────────────────────────────────────────────────────────────
     function formatBytes(bytes) {
