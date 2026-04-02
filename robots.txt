@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://heictojpg.pics/sitemap.xml
+Sitemap: https://heictojpeg.pics/sitemap.xml

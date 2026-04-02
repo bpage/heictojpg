@@ -10,7 +10,7 @@ Free, private, browser-based HEIC to JPG converter. Conversion happens 100% clie
 2. Go to [railway.app](https://railway.app) and create a new project
 3. Select **Deploy from GitHub repo** and choose this repository
 4. Railway auto-detects the Nixpacks builder and `Procfile`
-5. Set a custom domain: `heictojpg.pics`
+5. Set a custom domain: `heictojpeg.pics`
 
 ### Manual CLI deploy
 
@@ -26,7 +26,7 @@ railway init
 railway up
 
 # Set custom domain in Railway dashboard
-# Project → Settings → Domains → Add heictojpg.pics
+# Project → Settings → Domains → Add heictojpeg.pics
 ```
 
 ### Environment variables
@@ -69,7 +69,7 @@ python app.py
    - `<!-- REPLACE WITH ADSENSE: leaderboard-top -->`
    - `<!-- REPLACE WITH ADSENSE: rectangle-post-convert -->`
    - `<!-- REPLACE WITH ADSENSE: mobile-sticky -->`
-4. Add OG image at `https://heictojpg.pics/og-image.png` (1200×630)
+4. Add OG image at `https://heictojpeg.pics/og-image.png` (1200×630)
 
 ## Stack
 

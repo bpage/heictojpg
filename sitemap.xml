@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://heictojpg.pics/</loc>
+    <loc>https://heictojpeg.pics/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://heictojpg.pics/privacy</loc>
+    <loc>https://heictojpeg.pics/privacy</loc>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://heictojpg.pics/about</loc>
+    <loc>https://heictojpeg.pics/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://heictojpg.pics/dmca</loc>
+    <loc>https://heictojpeg.pics/dmca</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://heictojpg.pics/contact</loc>
+    <loc>https://heictojpeg.pics/contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
