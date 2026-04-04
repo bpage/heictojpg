@@ -204,46 +204,6 @@
 
     .badge svg { flex-shrink: 0; opacity: 0.7; }
 
-    /* ── Ad Slots ── */
-    .ad-leaderboard {
-      margin: 28px auto 0;
-      text-align: center;
-      max-width: 728px;
-      padding: 0 20px;
-    }
-
-    .ad-rectangle-wrap {
-      margin: 40px auto 0;
-      text-align: center;
-      max-width: 336px;
-    }
-
-    .ad-label {
-      font-size: 0.65rem;
-      color: #333;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
-
-    .ad-placeholder {
-      background: #111;
-      border: 1px solid #1e1e1e;
-      border-radius: 4px;
-      color: #333;
-      font-size: 0.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ad-leaderboard .ad-placeholder { height: 90px; width: 100%; max-width: 728px; }
-    .ad-rectangle-wrap .ad-placeholder { height: 280px; width: 336px; margin: 0 auto; }
-
-    @media (max-width: 768px) {
-      .ad-leaderboard { display: none; }
-    }
-
     /* ── Main ── */
     main { padding: 32px 0 0; }
 
@@ -845,54 +805,6 @@
     .footer-tools a { color: #555; text-decoration: none; }
     .footer-tools a:hover { color: var(--text-muted); }
 
-    /* ── Mobile Sticky Ad ── */
-    .mobile-sticky-ad {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #0f0f0f;
-      border-top: 1px solid var(--border);
-      padding: 8px;
-      text-align: center;
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-
-    .mobile-sticky-ad .ad-placeholder {
-      height: 50px;
-      width: 320px;
-    }
-
-    .dismiss-btn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: #1e1e1e;
-      border: none;
-      color: var(--text-muted);
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      transition: background 0.15s;
-    }
-
-    .dismiss-btn:hover { background: #2a2a2a; }
-
-    @media (min-width: 769px) {
-      .mobile-sticky-ad { display: none !important; }
-    }
-
     /* ── Responsive tweaks ── */
     @media (max-width: 480px) {
       .dropzone { padding: 36px 20px 32px; border-radius: 14px; }
@@ -941,12 +853,6 @@
     </div>
   </section>
 
-  <!-- Ad Slot 1: Leaderboard (desktop only) -->
-  <div class="ad-leaderboard">
-    <div class="ad-label">Advertisement</div>
-    <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: leaderboard-top --></div>
-  </div>
-
   <!-- Main Converter -->
   <main>
     <div class="container">
@@ -994,11 +900,6 @@
       <!-- Results Grid -->
       <div id="resultsGrid" class="results-grid"></div>
 
-      <!-- Ad Slot 2: Rectangle (shown after first conversion) -->
-      <div id="adRect" class="ad-rectangle-wrap hidden">
-        <div class="ad-label">Advertisement</div>
-        <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: rectangle-post-convert --></div>
-      </div>
     </div>
   </main>
 
@@ -1160,12 +1061,6 @@
     <div class="footer-tools">More tools: <a href="https://redditsave.pics">RedditSave</a> &nbsp;·&nbsp; <a href="https://savetok.pics">SaveTok</a> &nbsp;·&nbsp; <a href="https://youtubetomp3.pics">YouTubeToMP3</a> &nbsp;·&nbsp; <a href="https://xsave.pics">XSave</a></div>
   </footer>
 
-  <!-- Mobile Sticky Ad -->
-  <div id="mobileStickyAd" class="mobile-sticky-ad hidden">
-    <div class="ad-placeholder"><!-- REPLACE WITH ADSENSE: mobile-sticky --></div>
-    <button id="dismissStickyAd" class="dismiss-btn" aria-label="Dismiss">×</button>
-  </div>
-
   <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
@@ -1190,11 +1085,8 @@
     const statsBar       = document.getElementById('statsBar');
     const qualitySlider  = document.getElementById('qualitySlider');
     const qualityVal     = document.getElementById('qualityVal');
-    const adRect         = document.getElementById('adRect');
     const noWasmBanner   = document.getElementById('noWasmBanner');
     const dropErrorMsg   = document.getElementById('dropErrorMsg');
-    const mobileStickyAd = document.getElementById('mobileStickyAd');
-    const dismissStickyAd = document.getElementById('dismissStickyAd');
 
     // ── WebAssembly check — only show banner if it actually fails ─────────────
     (async () => {
@@ -1479,7 +1371,7 @@
       const done = fileQueue.filter(f => f.status === 'done');
       if (done.length > 0) {
         downloadZipBtn.classList.remove('hidden');
-        adRect.classList.remove('hidden');
+
         updateStats();
       }
     }
@@ -1505,7 +1397,7 @@
       const done = fileQueue.filter(f => f.status === 'done');
       if (done.length > 0) {
         downloadZipBtn.classList.remove('hidden');
-        adRect.classList.remove('hidden');
+
         updateStats();
       }
     };
@@ -1572,18 +1464,7 @@
       });
     });
 
-    // ── Mobile sticky ad ───────────────────────────────────────────────────────
-    if (window.innerWidth < 769) {
-      setTimeout(() => {
-        mobileStickyAd.classList.remove('hidden');
-      }, 5000);
-    }
-
-    dismissStickyAd.addEventListener('click', () => {
-      mobileStickyAd.classList.add('hidden');
-    });
-
-  })();
+})();
   </script>
 </body>
 </html>
