@@ -45,7 +45,7 @@ def robots():
 
 @app.route("/ads.txt")
 def ads_txt():
-    return send_from_directory(os.path.dirname(__file__), "ads.txt")
+    return send_from_directory("static", "ads.txt")
 
 
 if __name__ == "__main__":

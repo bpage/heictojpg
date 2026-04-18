@@ -212,8 +212,18 @@
       font-size: clamp(1.15rem, 3vw, 1.45rem);
       font-weight: 600;
       color: var(--text);
-      margin-bottom: 28px;
+      margin-bottom: 14px;
       padding: 0 20px;
+    }
+
+    .intro-text {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 28px;
+      padding: 0 20px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
     }
 
     /* ── Drop Zone ── */
@@ -752,10 +762,9 @@
       color: var(--text-dim);
     }
 
-    .faq-item.open .faq-chevron { transform: rotate(180deg); }
 
     .faq-answer {
-      max-height: 0;
+      max-height: 400px;
       overflow: hidden;
       transition: max-height 0.3s ease;
     }
@@ -767,7 +776,8 @@
       line-height: 1.75;
     }
 
-    .faq-item.open .faq-answer { max-height: 200px; }
+    .faq-item.collapsed .faq-answer { max-height: 0; }
+    .faq-item.collapsed .faq-chevron { transform: rotate(-90deg); }
 
     /* ── Footer ── */
     footer {
@@ -857,6 +867,7 @@
   <main>
     <div class="container">
       <h1>Free HEIC to JPG Converter — No Upload Required</h1>
+      <p class="intro-text">heictojpg is a free online tool that converts Apple HEIC and HEIF photos from your iPhone or iPad into universally compatible JPG, PNG, or WebP images. Conversion happens entirely in your browser using WebAssembly, so your photos never leave your device. Batch convert up to 200 files at once, adjust output quality, and download everything as a ZIP — no account, no upload, no software install.</p>
 
       <!-- Drop Zone -->
       <div id="dropzone" class="dropzone" role="button" tabindex="0" aria-label="Drop HEIC files here or click to browse">
@@ -1455,12 +1466,19 @@
     });
 
     // ── FAQ accordion ──────────────────────────────────────────────────────────
+    // Answers render expanded server-side so they are visible without JS.
+    // JS progressively enhances to a collapsible accordion: collapse all, then
+    // open the first item by default. Clicking a question toggles its state.
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.add('collapsed'));
+    const firstFaq = document.querySelector('.faq-item');
+    if (firstFaq) firstFaq.classList.remove('collapsed');
+
     document.querySelectorAll('.faq-question').forEach(q => {
       q.addEventListener('click', () => {
         const item = q.closest('.faq-item');
-        const wasOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
-        if (!wasOpen) item.classList.add('open');
+        const wasCollapsed = item.classList.contains('collapsed');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.add('collapsed'));
+        if (wasCollapsed) item.classList.remove('collapsed');
       });
     });
 
